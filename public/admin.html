@@ -1,82 +1,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MOD Admin Panel</title>
-  <meta charset="UTF-8">
-  <style>
-    body { font-family: Arial; background:#111; color:white; padding:40px; }
-    h1 { color:#FF6B35; }
-    .card { background:#1e1e1e; padding:20px; margin-bottom:20px; border-radius:10px; }
-    input, select, button { padding:8px; margin:5px; }
-    button { background:#FF6B35; border:none; color:white; cursor:pointer; }
-    button:hover { opacity:0.8; }
-  </style>
+<meta charset="UTF-8">
+<title>MOD Admin</title>
+<style>
+body{background:#111;color:white;font-family:Arial;padding:30px}
+.card{background:#1e1e1e;padding:20px;margin:15px 0;border-radius:10px}
+input,select,textarea,button{margin:5px;padding:6px}
+button{background:#FF6B35;color:white;border:none;cursor:pointer}
+.pkg{border:1px solid #333;padding:15px;margin:10px 0;border-radius:8px}
+</style>
 </head>
 <body>
 
-<h1>🐾 MOD Admin Panel</h1>
+<h1>🐾 MOD FULL ADMIN</h1>
 
 <div class="card">
-  <h2>Create Tracking Number</h2>
-  <input id="sender" placeholder="Sender Name">
-  <input id="senderLocation" placeholder="Sender Location">
-  <input id="recipientName" placeholder="Recipient Name">
-  <input id="recipientEmail" placeholder="Recipient Email">
-  <input id="destination" placeholder="Destination">
-  <input id="weight" placeholder="Weight">
-  <input id="description" placeholder="Description">
-  <button onclick="create()">Create</button>
+<h2>Create Package</h2>
+<input id="customId" placeholder="Custom Tracking ID (optional)">
+<input id="sender" placeholder="Sender">
+<input id="senderLocation" placeholder="Sender Location">
+<input id="recipientName" placeholder="Recipient Name">
+<input id="recipientEmail" placeholder="Recipient Email">
+<input id="destination" placeholder="Destination">
+<input id="weight" placeholder="Weight">
+<input id="description" placeholder="Description">
+<button onclick="create()">Create</button>
 </div>
 
 <div class="card">
-  <h2>All Packages</h2>
-  <button onclick="load()">Refresh</button>
-  <div id="list"></div>
+<h2>Packages</h2>
+<button onclick="load()">Refresh</button>
+<div id="list"></div>
 </div>
 
 <script>
-async function create() {
-  const res = await fetch('/api/admin/create', {
+
+async function create(){
+  await fetch('/api/admin/create',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({
-      sender: sender.value,
-      senderLocation: senderLocation.value,
-      recipientName: recipientName.value,
-      recipientEmail: recipientEmail.value,
-      destination: destination.value,
-      weight: weight.value,
-      description: description.value
+    body:JSON.stringify({
+      customId:customId.value,
+      sender:sender.value,
+      senderLocation:senderLocation.value,
+      recipientName:recipientName.value,
+      recipientEmail:recipientEmail.value,
+      destination:destination.value,
+      weight:weight.value,
+      description:description.value
     })
   });
-
-  const data = await res.json();
-  alert("Created: " + data.id);
   load();
 }
 
-async function load() {
-  const res = await fetch('/api/admin/all');
-  const data = await res.json();
-  list.innerHTML = '';
+async function load(){
+  const res=await fetch('/api/admin/all');
+  const data=await res.json();
+  list.innerHTML='';
 
-  Object.values(data).forEach(pkg => {
-    list.innerHTML += `
-      <div class="card">
-        <b>${pkg.id}</b> — ${pkg.status}<br>
-        To: ${pkg.recipientName}<br>
-        <button onclick="deletePkg('${pkg.id}')">Delete</button>
-      </div>
-    `;
+  Object.values(data).forEach(pkg=>{
+    list.innerHTML+=`
+    <div class="pkg">
+      <b>${pkg.id}</b><br>
+      Status: ${pkg.status}<br>
+
+      <input id="newId-${pkg.id}" placeholder="Change ID">
+      <button onclick="changeId('${pkg.id}')">Change ID</button><br>
+
+      <input id="status-${pkg.id}" placeholder="New Status">
+      <input id="loc-${pkg.id}" placeholder="Location">
+      <button onclick="addTimeline('${pkg.id}')">Update Stage</button><br>
+
+      <textarea id="emailMsg-${pkg.id}" placeholder="Email message"></textarea>
+      <button onclick="sendEmail('${pkg.id}')">Send Email</button><br>
+
+      <button onclick="deletePkg('${pkg.id}')">Delete</button>
+    </div>`;
   });
 }
 
-async function deletePkg(id) {
-  await fetch('/api/admin/delete/' + id, { method:'DELETE' });
+async function changeId(id){
+  const newId=document.getElementById(`newId-${id}`).value;
+  await fetch('/api/admin/change-id/'+id,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({newId})
+  });
+  load();
+}
+
+async function addTimeline(id){
+  const status=document.getElementById(`status-${id}`).value;
+  const location=document.getElementById(`loc-${id}`).value;
+
+  await fetch('/api/admin/timeline/'+id,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      status,
+      statusKey:status.toLowerCase().replace(/\s/g,'_'),
+      location,
+      icon:"📦"
+    })
+  });
+  load();
+}
+
+async function sendEmail(id){
+  const msg=document.getElementById(`emailMsg-${id}`).value;
+  await fetch('/api/admin/email/'+id,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      subject:"MOD Update",
+      message:msg
+    })
+  });
+}
+
+async function deletePkg(id){
+  await fetch('/api/admin/delete/'+id,{method:'DELETE'});
   load();
 }
 
 load();
+
 </script>
 
 </body>
