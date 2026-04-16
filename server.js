@@ -37,7 +37,7 @@ app.listen(PORT, () => {
 
 // Start Discord Bot
 try {
-  require('./src/bot/bot');
+  require('./src/bot/debug'); require('./src/bot/bot');
   console.log(`🤖 MOD Discord Bot starting...`);
 } catch (err) {
   console.log(`⚠️  Bot not started: ${err.message}`);
