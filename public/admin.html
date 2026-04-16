@@ -9,6 +9,7 @@ body{background:#111;color:white;font-family:Arial;padding:30px}
 input,select,textarea,button{margin:5px;padding:6px}
 button{background:#FF6B35;color:white;border:none;cursor:pointer}
 .pkg{border:1px solid #333;padding:15px;margin:10px 0;border-radius:8px}
+select{background:#222;color:white}
 </style>
 </head>
 <body>
@@ -36,6 +37,19 @@ button{background:#FF6B35;color:white;border:none;cursor:pointer}
 
 <script>
 
+const stages = [
+  {key:"collected", label:"📦 Collected"},
+  {key:"processing", label:"⚙️ Processing"},
+  {key:"dispatched", label:"🚀 Dispatched"},
+  {key:"in_transit", label:"🚚 In Transit"},
+  {key:"out_for_delivery", label:"🐾 Out For Delivery"},
+  {key:"delivered", label:"✅ Delivered"},
+  {key:"delayed", label:"⚠️ Delayed"},
+  {key:"held", label:"🏢 Held At Facility"},
+  {key:"customs", label:"🛃 Customs Clearance"},
+  {key:"returned", label:"↩️ Returned To Sender"}
+];
+
 async function create(){
   await fetch('/api/admin/create',{
     method:'POST',
@@ -60,24 +74,57 @@ async function load(){
   list.innerHTML='';
 
   Object.values(data).forEach(pkg=>{
+
+    let stageOptions = stages.map(s =>
+      `<option value="${s.key}" ${pkg.statusKey===s.key?"selected":""}>${s.label}</option>`
+    ).join('');
+
     list.innerHTML+=`
     <div class="pkg">
       <b>${pkg.id}</b><br>
-      Status: ${pkg.status}<br>
+      Current Status: ${pkg.status}<br><br>
 
-      <input id="newId-${pkg.id}" placeholder="Change ID">
-      <button onclick="changeId('${pkg.id}')">Change ID</button><br>
+      <select id="stage-${pkg.id}">
+        ${stageOptions}
+      </select>
 
-      <input id="status-${pkg.id}" placeholder="New Status">
-      <input id="loc-${pkg.id}" placeholder="Location">
-      <button onclick="addTimeline('${pkg.id}')">Update Stage</button><br>
+      <input id="loc-${pkg.id}" placeholder="Update Location">
+      <button onclick="updateStage('${pkg.id}')">Update Stage</button>
+
+      <hr>
+
+      <input id="newId-${pkg.id}" placeholder="Change Tracking ID">
+      <button onclick="changeId('${pkg.id}')">Change ID</button>
+
+      <hr>
 
       <textarea id="emailMsg-${pkg.id}" placeholder="Email message"></textarea>
-      <button onclick="sendEmail('${pkg.id}')">Send Email</button><br>
+      <button onclick="sendEmail('${pkg.id}')">Send Email</button>
 
-      <button onclick="deletePkg('${pkg.id}')">Delete</button>
+      <hr>
+
+      <button onclick="deletePkg('${pkg.id}')">Delete Package</button>
     </div>`;
   });
+}
+
+async function updateStage(id){
+  const stageKey=document.getElementById(`stage-${id}`).value;
+  const location=document.getElementById(`loc-${id}`).value;
+  const stageLabel=stages.find(s=>s.key===stageKey).label;
+
+  await fetch('/api/admin/timeline/'+id,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      status:stageLabel,
+      statusKey:stageKey,
+      location:location,
+      icon:stageLabel.split(" ")[0]
+    })
+  });
+
+  load();
 }
 
 async function changeId(id){
@@ -86,23 +133,6 @@ async function changeId(id){
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({newId})
-  });
-  load();
-}
-
-async function addTimeline(id){
-  const status=document.getElementById(`status-${id}`).value;
-  const location=document.getElementById(`loc-${id}`).value;
-
-  await fetch('/api/admin/timeline/'+id,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      status,
-      statusKey:status.toLowerCase().replace(/\s/g,'_'),
-      location,
-      icon:"📦"
-    })
   });
   load();
 }
