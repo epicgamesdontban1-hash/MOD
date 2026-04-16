@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MOD Admin Panel</title>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial; background:#111; color:white; padding:40px; }
+    h1 { color:#FF6B35; }
+    .card { background:#1e1e1e; padding:20px; margin-bottom:20px; border-radius:10px; }
+    input, select, button { padding:8px; margin:5px; }
+    button { background:#FF6B35; border:none; color:white; cursor:pointer; }
+    button:hover { opacity:0.8; }
+  </style>
+</head>
+<body>
+
+<h1>🐾 MOD Admin Panel</h1>
+
+<div class="card">
+  <h2>Create Tracking Number</h2>
+  <input id="sender" placeholder="Sender Name">
+  <input id="senderLocation" placeholder="Sender Location">
+  <input id="recipientName" placeholder="Recipient Name">
+  <input id="recipientEmail" placeholder="Recipient Email">
+  <input id="destination" placeholder="Destination">
+  <input id="weight" placeholder="Weight">
+  <input id="description" placeholder="Description">
+  <button onclick="create()">Create</button>
+</div>
+
+<div class="card">
+  <h2>All Packages</h2>
+  <button onclick="load()">Refresh</button>
+  <div id="list"></div>
+</div>
+
+<script>
+async function create() {
+  const res = await fetch('/api/admin/create', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({
+      sender: sender.value,
+      senderLocation: senderLocation.value,
+      recipientName: recipientName.value,
+      recipientEmail: recipientEmail.value,
+      destination: destination.value,
+      weight: weight.value,
+      description: description.value
+    })
+  });
+
+  const data = await res.json();
+  alert("Created: " + data.id);
+  load();
+}
+
+async function load() {
+  const res = await fetch('/api/admin/all');
+  const data = await res.json();
+  list.innerHTML = '';
+
+  Object.values(data).forEach(pkg => {
+    list.innerHTML += `
+      <div class="card">
+        <b>${pkg.id}</b> — ${pkg.status}<br>
+        To: ${pkg.recipientName}<br>
+        <button onclick="deletePkg('${pkg.id}')">Delete</button>
+      </div>
+    `;
+  });
+}
+
+async function deletePkg(id) {
+  await fetch('/api/admin/delete/' + id, { method:'DELETE' });
+  load();
+}
+
+load();
+</script>
+
+</body>
+</html>
