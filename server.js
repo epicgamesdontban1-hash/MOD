@@ -25,6 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // API Routes
 app.use('/api/tracking', trackingRouter);
 app.use('/api/email', emailRouter);
+app.use('/api/admin', require('./src/api/admin'));
+app.use('/api/admin', require('./src/api/admin'));
 
 // Serve SPA
 app.get('*', (req, res) => {
@@ -37,7 +39,6 @@ app.listen(PORT, () => {
 
 // Start Discord Bot
 try {
-  require('./src/bot/debug'); require('./src/bot/bot');
   console.log(`🤖 MOD Discord Bot starting...`);
 } catch (err) {
   console.log(`⚠️  Bot not started: ${err.message}`);
