@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOD - Midgets Out for Delivery 🐾</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo" onclick="showPage('home')">
+        <span class="logo-paw">🐾</span>
+        <div class="logo-text">
+          <span class="logo-main">MOD</span>
+          <span class="logo-sub">Midgets Out for Delivery</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a onclick="showPage('home')" class="nav-link active">Home</a>
+        <a onclick="showPage('tracking')" class="nav-link">Track Package</a>
+        <a onclick="showPage('order')" class="nav-link">Place Order</a>
+        <a onclick="showPage('services')" class="nav-link">Services</a>
+        <a onclick="showPage('about')" class="nav-link">About Beertjie</a>
+        <a onclick="showPage('contact')" class="nav-link">Contact</a>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a onclick="showPage('home'); toggleMenu()">🏠 Home</a>
+    <a onclick="showPage('tracking'); toggleMenu()">🔍 Track Package</a>
+    <a onclick="showPage('order'); toggleMenu()">📦 Place Order</a>
+    <a onclick="showPage('services'); toggleMenu()">🚀 Services</a>
+    <a onclick="showPage('about'); toggleMenu()">🐕 About Beertjie</a>
+    <a onclick="showPage('contact'); toggleMenu()">📬 Contact</a>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ==================== HOME PAGE ==================== -->
+  <div id="page-home" class="page active">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="floating-paws">
+        <span class="fp fp1">🐾</span>
+        <span class="fp fp2">📦</span>
+        <span class="fp fp3">🐾</span>
+        <span class="fp fp4">📦</span>
+        <span class="fp fp5">🐾</span>
+        <span class="fp fp6">📦</span>
+      </div>
+      <div class="hero-content">
+        <div class="hero-badge">🌍 Worldwide Delivery by Paw</div>
+        <h1 class="hero-title">
+          <span class="hero-title-small">Welcome to</span>
+          <span class="hero-title-big">MOD</span>
+          <span class="hero-title-small">Midgets Out for Delivery</span>
+        </h1>
+        <p class="hero-subtitle">The world's fluffiest delivery service, powered by <strong>Beertjie</strong> — the most dedicated white Toy Pomeranian in the delivery business! 🐕</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showPage('order')">📦 Place an Order</button>
+          <button class="btn-secondary" onclick="showPage('tracking')">🔍 Track Package</button>
+        </div>
+        <div class="hero-track-quick">
+          <div class="quick-track-box">
+            <input type="text" id="heroTrackInput" placeholder="Enter tracking number (e.g. MOD-2024-001)" class="quick-track-input">
+            <button onclick="quickTrack()" class="quick-track-btn">Track 🐾</button>
+          </div>
+        </div>
+      </div>
+      <div class="hero-dog">
+        <div class="dog-container">
+          <div class="dog-emoji">🐕</div>
+          <div class="dog-package">📦</div>
+          <div class="dog-name">Beertjie</div>
+          <div class="dog-title">Chief Delivery Officer</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-icon">📦</div>
+          <div class="stat-number" data-target="50000">0</div>
+          <div class="stat-label">Packages Delivered</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🌍</div>
+          <div class="stat-number" data-target="195">0</div>
+          <div class="stat-label">Countries Reached</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🐾</div>
+          <div class="stat-number" data-target="100">0</div>
+          <div class="stat-label">% Fluffy Rating</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-number" data-target="5">0</div>
+          <div class="stat-label">Paw Stars Rating</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <div class="section-header">
+        <h2>Why Choose MOD? 🐾</h2>
+        <p>Because no other delivery service employs an actual Toy Pomeranian as Chief Delivery Officer</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🏃‍♂️</div>
+          <h3>Lightning Paw Delivery</h3>
+          <p>Beertjie runs fast on his tiny legs! Express delivery available worldwide with real-time paw tracking.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Fur-Secured Packages</h3>
+          <p>Every package is sniff-inspected and fluff-wrapped by Beertjie personally before dispatch.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📍</div>
+          <h3>Real-Time Paw Tracking</h3>
+          <p>Track your package at every step of Beertjie's journey with live GPS paw-point updates.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Discord Integration</h3>
+          <p>Get instant delivery updates directly in your Discord server. Beertjie barks when your package moves!</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📧</div>
+          <h3>Email Notifications</h3>
+          <p>Receive adorable email updates with Beertjie's personal delivery notes and status changes.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3>Global Coverage</h3>
+          <p>From Pretoria to Paris, Beertjie's paws reach every corner of the world. No location too far!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-section">
+      <div class="section-header">
+        <h2>How MOD Works 📦</h2>
+        <p>Simple, fluffy, and effective delivery in 4 easy steps</p>
+      </div>
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-icon">💻</div>
+          <h3>Place Your Order</h3>
+          <p>Fill in your delivery details online. Takes less than 2 minutes!</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-icon">🐾</div>
+          <h3>Beertjie Gets Ready</h3>
+          <p>Beertjie sniff-inspects your package and loads up for delivery.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-icon">📍</div>
+          <h3>Track in Real Time</h3>
+          <p>Follow Beertjie's every paw-step with our live tracking system.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-icon">✅</div>
+          <h3>Delivered with Love</h3>
+          <p>Package delivered! Rate Beertjie with paw stars and share your experience!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+      <div class="section-header">
+        <h2>What Our Customers Say 💬</h2>
+        <p>Real reviews from real humans who love Beertjie</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">🐾🐾🐾🐾🐾</div>
+          <p>"Beertjie delivered my package in record time! I could hear his tiny paws on my doorstep before I even got the notification!"</p>
+          <div class="testimonial-author">- Sarah van der Berg, Cape Town</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">🐾🐾🐾🐾🐾</div>
+          <p>"I've used every delivery service imaginable. None compare to the personal touch of a fluffy white Pomeranian delivering your goods!"</p>
+          <div class="testimonial-author">- James Mitchell, London</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">🐾🐾🐾🐾🐾</div>
+          <p>"The Discord integration is brilliant! My whole server got excited when Beertjie barked that my delivery was 2 paw-stops away!"</p>
+          <div class="testimonial-author">- Emma Joubert, Johannesburg</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter-section">
+      <div class="newsletter-content">
+        <h2>Join Beertjie's Pack! 🐾</h2>
+        <p>Subscribe for delivery updates, promotions, and exclusive Beertjie content!</p>
+        <div class="newsletter-form">
+          <input type="text" id="subName" placeholder="Your name" class="newsletter-input">
+          <input type="email" id="subEmail" placeholder="Your email address" class="newsletter-input">
+          <button onclick="subscribe()" class="btn-primary">Subscribe 🐾</button>
+        </div>
+      </div>
+  </div>
+
+
+
+  <!-- ==================== TRACKING PAGE ==================== -->
+  <div id="page-tracking" class="page">
+    <div class="page-hero">
+      <h1>🔍 Track Your Package</h1>
+      <p>Enter your MOD tracking number to see where Beertjie is with your delivery!</p>
+    </div>
+    <div class="page-content">
+      <div class="track-container">
+        <div class="track-input-section">
+          <div class="track-box">
+            <h2>Enter Tracking Number</h2>
+            <div class="track-input-group">
+              <input type="text" id="trackInput" placeholder="e.g. MOD-2024-001" class="track-input" onkeypress="if(event.key==='Enter')trackPackage()">
+              <button onclick="trackPackage()" class="btn-primary track-btn">🐾 Track</button>
+            </div>
+          </div>
+        </div>
+        <div id="trackResult" class="track-result"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ORDER PAGE ==================== -->
+  <div id="page-order" class="page">
+    <div class="page-hero">
+      <h1>📦 Place an Order</h1>
+      <p>Let Beertjie handle your delivery! Fill in the details below.</p>
+    </div>
+    <div class="page-content">
+      <div class="order-container">
+        <form id="orderForm" class="order-form" onsubmit="placeOrder(event)">
+          <div class="form-section">
+            <h2>👤 Your Details</h2>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" name="customerName" placeholder="Your full name" required>
+              </div>
+              <div class="form-group">
+                <label>Email Address *</label>
+                <input type="email" name="customerEmail" placeholder="your@email.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Sender Address</label>
+              <input type="text" name="senderAddress" placeholder="Where are we collecting from?">
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>📍 Recipient Details</h2>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Recipient Name</label>
+                <input type="text" name="recipientName" placeholder="Who is receiving?">
+              </div>
+              <div class="form-group">
+                <label>Recipient Email</label>
+                <input type="email" name="recipientEmail" placeholder="recipient@email.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Delivery Address *</label>
+              <input type="text" name="recipientAddress" placeholder="Full delivery address" required>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h2>📦 Package Details</h2>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Package Weight (kg) *</label>
+                <input type="number" name="packageWeight" placeholder="e.g. 2.5" step="0.1" min="0.1" max="100" required>
+              </div>
+              <div class="form-group">
+                <label>Service Type</label>
+                <select name="serviceType">
+                  <option value="Standard Paw Delivery">🐾 Standard Paw Delivery (5-7 days)</option>
+                  <option value="Priority Sniff">👃 Priority Sniff (3-4 days)</option>
+                  <option value="Express Paw">⚡ Express Paw (1-2 days)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Package Description</label>
+              <input type="text" name="packageDescription" placeholder="What's inside? (for Beertjie's curiosity)">
+            </div>
+            <div class="form-group">
+              <label>Special Instructions</label>
+              <textarea name="specialInstructions" placeholder="Any special delivery instructions for Beertjie?" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="price-calculator">
+            <h3>💰 Estimated Price</h3>
+            <div class="price-display" id="priceDisplay">Enter weight to calculate</div>
+          </div>
+
+          <button type="submit" class="btn-primary btn-full btn-large">
+            🐾 Place Order - Let Beertjie Deliver!
+          </button>
+        </form>
+        <div id="orderResult"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SERVICES PAGE ==================== -->
+  <div id="page-services" class="page">
+    <div class="page-hero">
+      <h1>🚀 Our Services</h1>
+      <p>Beertjie offers a range of delivery services to suit every need</p>
+    </div>
+    <div class="page-content">
+      <div class="services-grid">
+        <div class="service-card featured">
+          <div class="service-badge">Most Popular</div>
+          <div class="service-icon">🐾</div>
+          <h2>Standard Paw Delivery</h2>
+          <div class="service-price">From R65</div>
+          <div class="service-time">⏱️ 5-7 Business Days</div>
+          <ul class="service-features">
+            <li>✅ Door-to-door delivery</li>
+            <li>✅ Email notifications</li>
+            <li>✅ Package tracking</li>
+            <li>✅ Sniff-inspection guaranteed</li>
+            <li>✅ Discord updates</li>
+            <li>✅ Paw signature on delivery</li>
+          </ul>
+          <button class="btn-primary" onclick="showPage('order')">Order Now</button>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">👃</div>
+          <h2>Priority Sniff</h2>
+          <div class="service-price">From R97.50</div>
+          <div class="service-time">⏱️ 3-4 Business Days</div>
+          <ul class="service-features">
+            <li>✅ Everything in Standard</li>
+            <li>✅ Priority queue positioning</li>
+            <li>✅ SMS updates</li>
+            <li>✅ Double sniff inspection</li>
+            <li>✅ Live tracking updates</li>
+            <li>✅ Dedicated Beertjie handler</li>
+          </ul>
+          <button class="btn-primary" onclick="showPage('order')">Order Now</button>
+        </div>
+        <div class="service-card gold">
+          <div class="service-badge gold-badge">Premium</div>
+          <div class="service-icon">⚡</div>
+          <h2>Express Paw</h2>
+          <div class="service-price">From R130</div>
+          <div class="service-time">⏱️ 1-2 Business Days</div>
+          <ul class="service-features">
+            <li>✅ Everything in Priority</li>
+            <li>✅ Beertjie runs extra fast</li>
+            <li>✅ Real-time GPS paw tracking</li>
+            <li>✅ Photo on delivery</li>
+            <li>✅ White-glove paw handling</li>
+            <li>✅ Beertjie selfie included</li>
+          </ul>
+          <button class="btn-primary" onclick="showPage('order')">Order Now</button>
+        </div>
+        <div class="service-card international">
+          <div class="service-icon">🌍</div>
+          <h2>International Delivery</h2>
+          <div class="service-price">From R500</div>
+          <div class="service-time">⏱️ 7-14 Business Days</div>
+          <ul class="service-features">
+            <li>✅ Worldwide coverage</li>
+            <li>✅ 195 countries reached</li>
+            <li>✅ Customs cleared by Beertjie</li>
+            <li>✅ Multi-language tracking</li>
+            <li>✅ International paw network</li>
+            <li>✅ Beertjie passport stamped</li>
+          </ul>
+          <button class="btn-primary" onclick="showPage('order')">Order Now</button>
+        </div>
+      </div>
+      <div class="discord-cta">
+        <div class="discord-icon">🎮</div>
+        <h2>Join Our Discord for Exclusive Deals!</h2>
+        <p>Get real-time delivery notifications, exclusive member discounts, and chat directly with Beertjie's team in our Discord server!</p>
+        <a href="https://discord.gg/fcUTg5ay6n" target="_blank" class="btn-discord">Join MOD Discord Server</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== ABOUT PAGE ==================== -->
+  <div id="page-about" class="page">
+    <div class="page-hero">
+      <h1>🐕 About Beertjie</h1>
+      <p>The world's most fluffy, dedicated, and adorable delivery dog</p>
+    </div>
+    <div class="page-content">
+      <div class="about-container">
+        <div class="about-hero-card">
+          <div class="beertjie-profile">
+            <div class="beertjie-avatar">🐕</div>
+            <div class="beertjie-info">
+              <h2>Beertjie</h2>
+              <p class="beertjie-title">Chief Delivery Officer & CEO (Chief Excitement Officer)</p>
+              <div class="beertjie-badges">
+                <span class="badge">🏆 5-Star Rated</span>
+                <span class="badge">🌍 Global Deliverer</span>
+                <span class="badge">🐾 Toy Pomeranian</span>
+                <span class="badge">⚡ Express Certified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-story">
+          <div class="story-card">
+            <h2>The MOD Story 📖</h2>
+            <p>It all began in a small suburb of Pretoria, South Africa. Beertjie, a tiny white Toy Pomeranian with the biggest heart, noticed his owner struggling with missed deliveries and unreliable couriers. Being the problem-solver he is, Beertjie decided to take matters into his own paws.</p>
+            <p>In 2020, <strong>MOD (Midgets Out for Delivery)</strong> was officially established. What started as Beertjie delivering neighborhood parcels quickly exploded into a worldwide sensation. His dedication, fluffiness, and uncanny ability to navigate through traffic became legendary.</p>
+            <p>Today, MOD operates in 195 countries, has delivered over 50,000 packages, and maintains a perfect 5-paw rating. Beertjie has become an international celebrity in the logistics world — though he still prefers belly rubs over awards.</p>
+          </div>
+        </div>
+
+        <div class="beertjie-stats">
+          <h2>Beertjie By The Numbers 🔢</h2>
+          <div class="beertjie-stats-grid">
+            <div class="bstat">
+              <span class="bstat-num">50,000+</span>
+              <span class="bstat-label">Packages Delivered</span>
+            </div>
+            <div class="bstat">
+              <span class="bstat-num">195</span>
+              <span class="bstat-label">Countries Visited</span>
+            </div>
+            <div class="bstat">
+              <span class="bstat-num">4</span>
+              <span class="bstat-label">Years in Business</span>
+            </div>
+            <div class="bstat">
+              <span class="bstat-num">0</span>
+              <span class="bstat-label">Packages Chewed</span>
+            </div>
+            <div class="bstat">
+              <span class="bstat-num">∞</span>
+              <span class="bstat-label">Tail Wags per Delivery</span>
+            </div>
+            <div class="bstat">
+              <span class="bstat-num">5 ⭐</span>
+              <span class="bstat-label">Average Paw Rating</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-section">
+          <h2>The MOD Team 👥</h2>
+          <div class="team-grid">
+            <div class="team-card">
+              <div class="team-avatar">🐕</div>
+              <h3>Beertjie</h3>
+              <p class="team-role">Chief Delivery Officer</p>
+              <p>The main man. Tiny legs, enormous dedication.</p>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar">👩‍💼</div>
+              <h3>Linda</h3>
+              <p class="team-role">Operations Manager</p>
+              <p>Keeps Beertjie's schedule organised and his bowl full.</p>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar">👨‍💻</div>
+              <h3>Dev Team</h3>
+              <p class="team-role">Tech & Discord Integration</p>
+              <p>Makes sure Beertjie's barks reach Discord in milliseconds.</p>
+            </div>
+            <div class="team-card">
+              <div class="team-avatar">🐾</div>
+              <h3>The Paw Network</h3>
+              <p class="team-role">International Division</p>
+              <p>Beertjie's network of fluffy international delivery partners.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CONTACT PAGE ==================== -->
+  <div id="page-contact" class="page">
+    <div class="page-hero">
+      <h1>📬 Contact MOD</h1>
+      <p>Reach out to Beertjie's team — we respond faster than his tail wags!</p>
+    </div>
+    <div class="page-content">
+      <div class="contact-container">
+        <div class="contact-info">
+          <div class="contact-card">
+            <h2>Get In Touch 🐾</h2>
+            <div class="contact-item">
+              <div class="contact-icon"></div>
+              <div>
+                <h4>MOD Headquarters</h4>
+                 <p>9 Bodo Road, South Africa, 0185</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"></div>
+              <div>
+                <h4>Email Beertjie</h4>
+                <p>beertjie@moddelivery.com<br>support@moddelivery.com</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"></div>
+              <div>
+                <h4>Discord Server</h4>
+                <p>Join our community for instant support and delivery updates!</p>
+                <p style="margin-top:10px;">
+                  <a href="https://discord.gg/fcUTg5ay6n" target="_blank" class="btn-discord small">Join Discord</a>
+                </p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"></div>
+              <div>
+                <h4>Support Hours</h4>
+                <p>Beertjie: 24/7 (He never sleeps)<br>Human team: Mon-Fri 2pm-5pm</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-container">
+          <div class="form-card">
+            <h2>Send a Message </h2>
+            <form id="contactForm" onsubmit="sendContact(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Your Name *</label>
+                  <input type="text" name="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email Address *</label>
+                  <input type="email" name="email" placeholder="your@email.com" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Subject</label>
+                <select name="subject">
+                  <option value="General Inquiry">🐾 General Inquiry</option>
+                  <option value="Tracking Issue">🔍 Tracking Issue</option>
+                  <option value="Order Problem">📦 Order Problem</option>
+                  <option value="Discord Help">🎮 Discord Help</option>
+                  <option value="Beertjie Fan Mail">💌 Beertjie Fan Mail</option>
+                  <option value="Complaint">😟 Complaint</option>
+                  <option value="Other">❓ Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Message *</label>
+                <textarea name="message" placeholder="Tell Beertjie what's on your mind..." rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn-primary btn-full">
+                📬 Send Message to Beertjie
+              </button>
+            </form>
+            <div id="contactResult"></div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">🐾 MOD</div>
+        <p>Midgets Out for Delivery<br>Powered by Beertjie, the world's most dedicated delivery Pomeranian.</p>
+        <div class="footer-socials">
+          <a href="https://discord.gg/fcUTg5ay6n" target="_blank" title="Join our Discord server">🎮 Discord</a>
+          <span onclick="showPage('contact')" title="Send us an email">📧 Email</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('tracking')">Track Package</a>
+        <a onclick="showPage('order')">Place Order</a>
+        <a onclick="showPage('services')">Our Services</a>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <a onclick="showPage('about')">About Beertjie</a>
+        <a onclick="showPage('contact')">Contact Us</a>
+        <a onclick="showToast('Terms coming soon! 🐾')">Terms of Service</a>
+        <a onclick="showToast('Privacy policy coming soon! 🐾')">Privacy Policy</a>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <p>📍 MOD HQ, Pretoria, South Africa</p>
+        <p>📧 beertjie@moddelivery.com</p>
+        <p>🐾 Available 24/7 (Beertjie never sleeps)</p>
+        <p>🎮 Discord: MOD Delivery Server</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 MOD - Midgets Out for Delivery. All rights reserved. 🐾 Powered by Beertjie's tiny paws.</p>
+    </div>
+  </footer>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="loading-dog">🐕</div>
+      <p>Beertjie is working on it...</p>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

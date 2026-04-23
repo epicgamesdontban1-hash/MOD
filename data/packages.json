@@ -1,0 +1,29 @@
+{
+  "MOD": {
+    "id": "MOD",
+    "sender": "a",
+    "senderLocation": "a",
+    "recipientName": "a",
+    "recipientEmail": "a",
+    "destination": "a",
+    "weight": "",
+    "description": "a",
+    "serviceType": "Standard Paw Delivery",
+    "status": "📦 Collected",
+    "statusKey": "collected",
+    "timeline": [
+      {
+        "icon": "📥",
+        "status": "📥 Order Received",
+        "location": "a",
+        "date": "2026-04-23T19:00:19.054Z"
+      },
+      {
+        "icon": "📦",
+        "status": "📦 Collected",
+        "location": "South Adrica",
+        "date": "2026-04-23T19:01:03.385Z"
+      }
+    ]
+  }
+}

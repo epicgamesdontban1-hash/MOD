@@ -1,0 +1,16 @@
+{
+  "name": "mod-delivery",
+  "version": "3.0.0",
+  "description": "MOD - Midgets Out for Delivery",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.7",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  }
+}
